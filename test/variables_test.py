@@ -78,6 +78,10 @@ class VariablesTests(unittest.TestCase):
         vars = uritemplate.variables(template)
         self.assertEquals(vars, set(['a', 'b', 'c', 'd']))
 
+    def test_simple_with_dashes(self):
+        template = 'http://example.com/{x-a,y$b}'
+        vars = uritemplate.variables(template)
+        self.assertEquals(vars, set(['x-a', 'y$b']))
 
 if __name__ == '__main__':
     unittest.main()
