@@ -78,10 +78,20 @@ class VariablesTests(unittest.TestCase):
         vars = uritemplate.variables(template)
         self.assertEquals(vars, set(['a', 'b', 'c', 'd']))
 
-    def test_simple_with_dashes(self):
+    def test_simple_with_special_characters(self):
         template = 'http://example.com/{x-a,y$b}'
         vars = uritemplate.variables(template)
         self.assertEquals(vars, set(['x-a', 'y$b']))
+
+    def test_simple_with_allowed_space_after_comma(self):
+        template = 'http://example.com/{x-a, y$b}'
+        vars = uritemplate.variables(template)
+        self.assertEquals(vars, set(['x-a', 'y$b']))
+
+    def test_reserved_with_allowed_space_after_comma(self):
+        template = 'http://example.com/{+x, y}/{+z}'
+        vars = uritemplate.variables(template)
+        self.assertEquals(vars, set(['x', 'y', 'z']))
 
 if __name__ == '__main__':
     unittest.main()

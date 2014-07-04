@@ -42,7 +42,7 @@ def variables(template):
     for varlist in TEMPLATE.findall(template):
         if varlist[0] in OPERATOR:
             varlist = varlist[1:]
-        varspecs = varlist.split(',')
+        varspecs = [var.strip() for var in varlist.split(',')]
         for var in varspecs:
             # handle prefix values
             var = var.split(':')[0]
@@ -205,7 +205,7 @@ def expand(template, variables):
         safe = ""
         if operator in ["+", "#"]:
             safe = RESERVED
-        varspecs = varlist.split(",")
+        varspecs = [var.strip() for var in varlist.split(",")]
         varnames = []
         defaults = {}
         for varspec in varspecs:
